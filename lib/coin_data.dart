@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const List<String> currenciesList = [
   'AUD',
   'BRL',
@@ -28,4 +30,19 @@ const List<String> cryptoList = [
   'LTC',
 ];
 
-class CoinData {}
+class CoinData {
+  List<DropdownMenuItem<String>> itemList = [
+    DropdownMenuItem(
+      child: Text("USD"),
+      value: "USD",
+    ),
+    DropdownMenuItem(
+      child: Text("EUR"),
+      value: "EUR",
+    ),
+    DropdownMenuItem(
+      child: Text("GPD"),
+      value: "GPD",
+    ),
+  ];
+}
