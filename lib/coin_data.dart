@@ -34,11 +34,11 @@ class CoinData {
   List<DropdownMenuItem<String>> itemList = [];
 
   void addItem() {
-    for (var i = 0; i < currenciesList.length; i++) {
+    for (String currency in currenciesList) {
       itemList.add(
         DropdownMenuItem(
-          child: Text("${currenciesList[i]}"),
-          value: currenciesList[i],
+          child: Text(currency),
+          value: currency,
         ),
       );
     }
