@@ -31,18 +31,16 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
-  List<DropdownMenuItem<String>> itemList = [
-    DropdownMenuItem(
-      child: Text("USD"),
-      value: "USD",
-    ),
-    DropdownMenuItem(
-      child: Text("EUR"),
-      value: "EUR",
-    ),
-    DropdownMenuItem(
-      child: Text("GPD"),
-      value: "GPD",
-    ),
-  ];
+  List<DropdownMenuItem<String>> itemList = [];
+
+  void addItem() {
+    for (var i = 0; i < currenciesList.length; i++) {
+      itemList.add(
+        DropdownMenuItem(
+          child: Text("${currenciesList[i]}"),
+          value: currenciesList[i],
+        ),
+      );
+    }
+  }
 }
