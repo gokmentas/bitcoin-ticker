@@ -20,8 +20,8 @@ class _PriceScreenState extends State<PriceScreen> {
     super.initState();
   }
 
-  List<Widget> getPickerItems() {
-    List<Widget> pickerItems = [];
+  List<Text> getPickerItems() {
+    List<Text> pickerItems = [];
     for (String currency in currenciesList) {
       pickerItems.add(
         Text(currency),
