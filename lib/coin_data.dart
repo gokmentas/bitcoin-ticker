@@ -36,14 +36,18 @@ class CoinData {
   final String url;
   CoinData(this.url);
 
-  Future getCoinData() async {
+  Future getCoinData(String currency) async {
     http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       String data = response.body;
-      return jsonDecode(data)["rate"];
+      return jsonDecode(data)[currency]["last"];
     } else {
       print(response.statusCode);
     }
+  }
+
+  String getCurrencyName(int index) {
+    return currenciesList[index];
   }
 
   List<DropdownMenuItem<String>> itemList = [];

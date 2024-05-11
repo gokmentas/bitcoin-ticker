@@ -3,8 +3,11 @@ import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
-const apiKey = "99B01457-FBF3-402B-9B5F-EC1401441D8D";
-const coinAPIURL = "https://rest.coinapi.io/v1/exchangerate";
+const coinAPIURL = "https://blockchain.info/ticker";
+
+//String BTCURL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${deneme.toLowerCase()}";
+
+String deneme = "USD";
 
 class PriceScreen extends StatefulWidget {
   const PriceScreen({super.key});
@@ -14,14 +17,19 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  late String selectedCurrency = "USD";
+  String selectedCurrency = "USD";
+  String currentPrice = "1 BTC = ? USD";
 
-  CoinData coinData = CoinData("$coinAPIURL/BTC/USD?apikey=$apiKey");
+  CoinData coinData = CoinData(coinAPIURL);
 
   @override
   void initState() {
     coinData.addItem();
     super.initState();
+  }
+
+  void updateUI(String price) {
+    currentPrice = "1 BTC = $price $deneme";
   }
 
   CupertinoPicker iOSPicker() {
@@ -35,7 +43,11 @@ class _PriceScreenState extends State<PriceScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
       onSelectedItemChanged: (selectedIndex) async {
-        print(await coinData.getCoinData());
+        deneme = coinData.getCurrencyName(selectedIndex);
+        double data = await coinData.getCoinData(deneme);
+        setState(() {
+          updateUI(data.toString());
+        });
       },
       children: pickerItems,
     );
@@ -76,7 +88,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
                 child: Text(
-                  "1 BTC = ? USD",
+                  currentPrice,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -84,6 +96,64 @@ class _PriceScreenState extends State<PriceScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 0),
+            child: Card(
+              color: Colors.lightBlueAccent,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
+                child: Text(
+                  currentPrice,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 10,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 0),
+            child: Card(
+              color: Colors.lightBlueAccent,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
+                child: Text(
+                  currentPrice,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 100,
+            child: SizedBox(
+              height: 10,
             ),
           ),
           Container(
