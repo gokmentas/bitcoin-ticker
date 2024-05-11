@@ -7,7 +7,7 @@ const coinAPIURL = "https://blockchain.info/ticker";
 
 //String BTCURL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${deneme.toLowerCase()}";
 
-String deneme = "USD";
+String currencyName = "USD";
 
 class PriceScreen extends StatefulWidget {
   const PriceScreen({super.key});
@@ -29,7 +29,7 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void updateUI(String price) {
-    currentPrice = "1 BTC = $price $deneme";
+    currentPrice = "1 BTC = $price $currencyName";
   }
 
   CupertinoPicker iOSPicker() {
@@ -43,8 +43,8 @@ class _PriceScreenState extends State<PriceScreen> {
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
       onSelectedItemChanged: (selectedIndex) async {
-        deneme = coinData.getCurrencyName(selectedIndex);
-        double data = await coinData.getCoinData(deneme);
+        currencyName = coinData.getCurrencyName(selectedIndex);
+        double data = await coinData.getCoinData(currencyName);
         setState(() {
           updateUI(data.toString());
         });
