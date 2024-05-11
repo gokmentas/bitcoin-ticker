@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
 const coinAPIURL = "https://blockchain.info/ticker";
+const correctURL =
+    "https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=99B01457-FBF3-402B-9B5F-EC1401441D8D";
 
 String currencyName = "USD";
 
