@@ -3,6 +3,9 @@ import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
+const apiKey = "99B01457-FBF3-402B-9B5F-EC1401441D8D";
+const coinAPIURL = "https://rest.coinapi.io/v1/exchangerate";
+
 class PriceScreen extends StatefulWidget {
   const PriceScreen({super.key});
 
@@ -13,7 +16,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   late String selectedCurrency = "USD";
 
-  CoinData coinData = CoinData();
+  CoinData coinData = CoinData("$coinAPIURL/BTC/USD?apikey=$apiKey");
 
   @override
   void initState() {
@@ -31,8 +34,8 @@ class _PriceScreenState extends State<PriceScreen> {
     return CupertinoPicker(
       backgroundColor: Colors.lightBlue,
       itemExtent: 32,
-      onSelectedItemChanged: (selectedIndex) {
-        print(selectedIndex);
+      onSelectedItemChanged: (selectedIndex) async {
+        print(await coinData.getCoinData());
       },
       children: pickerItems,
     );
@@ -88,7 +91,8 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30),
             color: Colors.lightBlue,
-            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+            //child: Platform.isIOS ? iOSPicker() : androidDropdown(),
+            child: iOSPicker(),
           ),
         ],
       ),

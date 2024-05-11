@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 const List<String> currenciesList = [
   'AUD',
@@ -31,6 +33,19 @@ const List<String> cryptoList = [
 ];
 
 class CoinData {
+  final String url;
+  CoinData(this.url);
+
+  Future getCoinData() async {
+    http.Response response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      String data = response.body;
+      return jsonDecode(data)["rate"];
+    } else {
+      print(response.statusCode);
+    }
+  }
+
   List<DropdownMenuItem<String>> itemList = [];
 
   void addItem() {
