@@ -5,8 +5,6 @@ import 'dart:io' show Platform;
 
 const coinAPIURL = "https://blockchain.info/ticker";
 
-//String BTCURL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${deneme.toLowerCase()}";
-
 String currencyName = "USD";
 
 class PriceScreen extends StatefulWidget {
