@@ -3,10 +3,6 @@ import 'coin_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
-const coinAPIURL = "https://blockchain.info/ticker";
-const correctURL =
-    "https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=99B01457-FBF3-402B-9B5F-EC1401441D8D";
-
 String currencyName = "USD";
 
 class PriceScreen extends StatefulWidget {
@@ -18,9 +14,11 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String selectedCurrency = "USD";
-  String currentPrice = "1 BTC = ? USD";
+  String currentBTCPrice = "1 BTC = ? USD";
+  String currentLTCPrice = "1 LTC = ? USD";
+  String currentETHPrice = "1 ETH = ? USD";
 
-  CoinData coinData = CoinData(coinAPIURL);
+  CoinData coinData = CoinData();
 
   @override
   void initState() {
@@ -28,8 +26,18 @@ class _PriceScreenState extends State<PriceScreen> {
     super.initState();
   }
 
-  void updateUI(String price) {
-    currentPrice = "1 BTC = $price $currencyName";
+  void updateBTCUI(String price) {
+    currentBTCPrice = "1 BTC = $price $currencyName";
+    currentLTCPrice = "1 LTC = $price $currencyName";
+    currentETHPrice = "1 ETH = $price $currencyName";
+  }
+
+  void updateLTCUI(String price) {
+    currentLTCPrice = "1 LTC = $price $currencyName";
+  }
+
+  void updateETHUI(String price) {
+    currentETHPrice = "1 ETH = $price $currencyName";
   }
 
   CupertinoPicker iOSPicker() {
@@ -44,9 +52,13 @@ class _PriceScreenState extends State<PriceScreen> {
       itemExtent: 32,
       onSelectedItemChanged: (selectedIndex) async {
         currencyName = coinData.getCurrencyName(selectedIndex);
-        double data = await coinData.getCoinData(currencyName);
+        double btcData = await coinData.getBTCData(currencyName);
+        double ltcData = await coinData.getLTCData(currencyName);
+        double ethData = await coinData.getETHData(currencyName);
         setState(() {
-          updateUI(data.toString());
+          updateBTCUI(btcData.toString());
+          updateLTCUI(ltcData.toString());
+          updateETHUI(ethData.toString());
         });
       },
       children: pickerItems,
@@ -57,11 +69,17 @@ class _PriceScreenState extends State<PriceScreen> {
     return DropdownButton<String>(
       value: selectedCurrency,
       items: coinData.itemList,
-      onChanged: (value) {
+      onChanged: (value) async {
+        currencyName = value!;
+        double btcData = await coinData.getBTCData(currencyName);
+        double ltcData = await coinData.getLTCData(currencyName);
+        double ethData = await coinData.getETHData(currencyName);
         setState(() {
           selectedCurrency = value!;
+          updateBTCUI(btcData.toString());
+          updateLTCUI(ltcData.toString());
+          updateETHUI(ethData.toString());
         });
-        print(selectedCurrency);
       },
     );
   }
@@ -88,7 +106,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
                 child: Text(
-                  currentPrice,
+                  currentBTCPrice,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -114,7 +132,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
                 child: Text(
-                  currentPrice,
+                  currentLTCPrice,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -140,7 +158,7 @@ class _PriceScreenState extends State<PriceScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 28),
                 child: Text(
-                  currentPrice,
+                  currentETHPrice,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -161,8 +179,7 @@ class _PriceScreenState extends State<PriceScreen> {
             alignment: Alignment.center,
             padding: EdgeInsets.only(bottom: 30),
             color: Colors.lightBlue,
-            //child: Platform.isIOS ? iOSPicker() : androidDropdown(),
-            child: iOSPicker(),
+            child: Platform.isIOS ? iOSPicker() : androidDropdown(),
           ),
         ],
       ),
