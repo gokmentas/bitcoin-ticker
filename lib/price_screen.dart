@@ -76,9 +76,9 @@ class _PriceScreenState extends State<PriceScreen> {
         double ethData = await coinData.getETHData(currencyName);
         setState(() {
           selectedCurrency = value!;
-          updateBTCUI(btcData.toString());
-          updateLTCUI(ltcData.toString());
-          updateETHUI(ethData.toString());
+          updateBTCUI((btcData.toInt()).toString());
+          updateLTCUI((ltcData.toInt()).toString());
+          updateETHUI((ethData.toInt()).toString());
         });
       },
     );
