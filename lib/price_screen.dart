@@ -75,7 +75,7 @@ class _PriceScreenState extends State<PriceScreen> {
         double ltcData = await coinData.getLTCData(currencyName);
         double ethData = await coinData.getETHData(currencyName);
         setState(() {
-          selectedCurrency = value!;
+          selectedCurrency = value;
           updateBTCUI((btcData.toInt()).toString());
           updateLTCUI((ltcData.toInt()).toString());
           updateETHUI((ethData.toInt()).toString());
@@ -89,7 +89,7 @@ class _PriceScreenState extends State<PriceScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlue,
-        title: Text("🤑 Coin Ticker"),
+        title: const Text("🤑 Coin Ticker"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +108,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 child: Text(
                   currentBTCPrice,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
@@ -116,7 +116,7 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             child: SizedBox(
               height: 10,
             ),
@@ -134,7 +134,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 child: Text(
                   currentLTCPrice,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
@@ -142,7 +142,7 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             child: SizedBox(
               height: 10,
             ),
@@ -160,7 +160,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 child: Text(
                   currentETHPrice,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
@@ -168,7 +168,7 @@ class _PriceScreenState extends State<PriceScreen> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 100,
             child: SizedBox(
               height: 10,
@@ -177,7 +177,7 @@ class _PriceScreenState extends State<PriceScreen> {
           Container(
             height: 150,
             alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 30),
             color: Colors.lightBlue,
             child: Platform.isIOS ? iOSPicker() : androidDropdown(),
           ),

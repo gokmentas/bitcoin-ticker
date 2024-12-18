@@ -57,8 +57,8 @@ class CoinData {
     for (String currency in currenciesList) {
       itemList.add(
         DropdownMenuItem(
-          child: Text(currency),
           value: currency,
+          child: Text(currency),
         ),
       );
     }
